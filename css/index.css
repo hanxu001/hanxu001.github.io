@@ -2,8 +2,12 @@
     margin: 0;
     padding: 0;
 }
-
-img {
+.text{
+	font-size: 30px;
+	font-family: ;
+	color: #ff0048;
+}
+.img {
     width: 500px;
     height: 370px;
 }
