@@ -1,0 +1,64 @@
+1、框架目录结构：
+src/
+    components/
+           osc-navpage.vue 目前只有这个组件可以正常使用，注意里面的属性 其他没有验证，请不要使用,
+    entry/  相当于一个缓存文件夹
+    filters/ 过滤器函数
+    mixins/ 混合方法
+    utils/ 公共函数
+        AppConfig.js  应用配置信息
+        Utils.js  工具函数
+        WeexModules.js  weex modules 看下里面的代码
+    views/ 页面 实际写的代码都放在里面
+        common_imgs  通用图片 命名规则 common+图片名 common_icon.png
+        login/ 登录页面
+            imgs/   放本页的图片 命名规则是目录名+图片名  例如这里要放一个icon.png 图片  必须命名为  login_icon.png
+            page.vue
+            page.js  根据需要创建该文件
+            style.css
+            template.html
+
+
+
+2、filters目录下的函数使用
+e.g: index.js 里面有 isNumber 函数
+在模板里面使用方式如下
+<text>{{ '123' | isNumber }}</text>
+<div num="'23' | isNumber" ></div>
+
+3、mixins 目录下函数使用
+里面有test 和jump 函数
+在单页面里面可以用jump 使用了vue-router
+export default {
+    created(){
+        this.test();
+    },
+    methods:{
+        click() {
+        this.test();
+        }
+    }
+}
+
+
+
+4、utils 目录下面的js 如何导出使用
+import appConfig from 'utils/AppConfig'
+appConfig.getImagesAddress();
+
+//根据需要导出对应的函数
+import {isNull} from 'utils/Utils'
+isNull(null)
+
+import weexModules from 'utils/WeexModules'
+//http 请求
+weexModules.httpGet('/api/userInfo').then(function(res){})
+
+5、views 目录：
+里面的每一个子目录就是一个页面，该目录下必须是以下结构
+ login/ 登录页面
+            imgs/   放本页的图片 命名规则是目录名+图片名  例如这里要放一个icon.png 图片  必须命名为  login_icon.png
+            page.vue
+            page.js  根据需要创建该文件
+            style.css
+            template.html
