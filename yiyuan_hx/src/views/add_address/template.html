@@ -1,0 +1,55 @@
+
+<osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="naviBarLeftItemClick">
+    <div :style="{height:HEIGHT}">
+        <div style="width: 750px;height: 100px;flex-direction: row;align-items: center;justify-content: flex-start;background-color: #fff;margin-bottom: 2px">
+            <text class="name">收货人</text>
+            <input class="input" type="text" ref="input1" placeholder="请填写收货人姓名 " :value="address.receiver_name"
+                   @input="onInput(1,$event)" maxlength="10" style="height: 100px;" @focus="onFocus(1,$event)"/>
+        </div>
+        <div class="banner-div">
+            <text class="name">手机号码</text>
+            <input class="input" type="tel" ref="input2" maxlength="11" placeholder="请填写收货人联系方式" :value="address.mobile"
+                   @input="onInput(2,$event)" @focus="onFocus(2,$event)" />
+        </div>
+        <div class="banner-div">
+            <text class="name">所在地区</text>
+            <div class="input" style="justify-content: space-between" @click="areaClick">
+                <text style="color: #999999;flex: 1;font-size: 30px">{{province_city_district_name}}</text>
+                <text style="margin-right: 10px;color: #999999;flex: 0.1;font-size: 30px">></text>
+            </div>
+        </div>
+        <div class="banner-div">
+            <text class="name">详细地址</text>
+            <textarea :id="textarea" class="input" ref="input3" type="text" placeholder="请填写详细地址" :value="address.street_address"
+                      @input="onInput(3,$event)" maxlength="50" :rows="mylines" @focus="onFocus(3,$event)"></textarea>
+        </div>
+        <div class="default-address">
+            <text class="default-text">设置默认收货地址</text>
+            <switch @change="onchange" :checked="address.default_status" style="width: 100px;height: 30px;margin-right: 20px"></switch>
+        </div>
+        <text class="save" @click="saveClick">保存</text>
+    </div>
+    <div class="area_top"
+         v-if="area_click"
+         @click="dissmeClick"
+         :style="{height:HEIGHT}">
+        <div :style="{height:HEIGHT*2/5}"></div>
+    </div>
+    <div class="area-text"
+         v-if="area_click"
+         :style="{height:HEIGHT/3}">
+        <div style="flex-direction: row;" >
+            <div class="dialog_div" v-for="(item,index) in area_texts" @click="areaHeaderClick(index)">
+                <text :class="['dialog_text_header', SelectedClass]">{{item}}</text>
+            </div>
+        </div>
+        <scroller>
+            <!--type 1 2 3 分别是省 市 区-->
+            <div class="dialog_div" v-for="(item ,index) in provinces_cities_districts" type="type"
+                 @click="selectResult(index,type)">
+                <text class="dialog_content_text">{{item.name}}</text>
+            </div>
+        </scroller>
+    </div>
+</osc-navpage>
+

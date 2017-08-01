@@ -1,0 +1,62 @@
+.content_list_wrap{
+    flex-direction: row;
+    height: 280px;
+    padding-top: 20px;
+    background-color: white;
+    margin-bottom: 30px;
+}
+.img_wrap{
+    height: 280px;
+    width: 140px;
+    justify-content: flex-start;
+    align-items: center;
+}
+.img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.right_info{
+    flex-direction: column;
+    height: 260px;
+}
+.right_info_txt{
+    /*flex: 1;*/
+    margin-bottom: 8px;
+    color: #9c9c9c;
+    font-size: 30px;
+}
+.item_user_name{
+    flex-direction: row;
+}
+.user_name{
+    font-size: 38px;
+    color: rgb(254,205,80);
+}
+.item_lucky_num{
+    flex-direction: row;
+}
+.lucky_num{
+    color: rgb(220,82,74);
+    font-size: 30px;
+}
+.buy_num{
+    color: rgb(220,82,74);
+    font-size: 30px;
+}
+.item_buy_num{
+    flex-direction: row;
+}
+/*下拉刷新下拉加载*/
+.gif {
+    width: 164px;
+    height: 100px;
+}
+.refresh_view {
+    width: 750px;
+    height: 140px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

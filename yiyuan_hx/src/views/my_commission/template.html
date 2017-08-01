@@ -1,0 +1,64 @@
+<osc-navpage :title="title" :rightItemTitle="rightItemTitle" :leftImageSrc="left_item_src"
+             @naviBarLeftItemClick="naviBarLeftItemClick" @naviBarRightItemClick="rightClick">
+
+    <list>
+        <cell>
+            <div class="commission_top" @click="goWithdraw">
+                <text style="font-size:36px;color:white;margin-top:20px">总收益 (元)</text>
+                <text style="font-size:114px;color:white;margin-top:30px;">{{royalty_amount==undefined?'0.00':royalty_amount}}</text>
+                <div class="rule" @click="goRule">
+                    <text style="font-size:34px;color:white;">规则说明>></text>
+                </div>
+            </div>
+        </cell>
+        <cell v-if="!noneData">
+            <div class="commission_con">
+                <div class="commission_con_yes">
+                    <div class="comsn_contil">
+                        <text class="comsn_contil_font">上周收益排行榜</text>
+                        <text style="font-size:28px;" class="comsn_contil_font">（每周一0点更新）</text>
+                    </div>
+                    <div class="comsn_list" v-for="(item,index) in users">
+                        <image v-if="index==0" class="index_img" :src="rankingimg1"/>
+                        <image v-if="index==1" class="index_img" :src="rankingimg2"/>
+                        <image v-if="index==2" class="index_img" :src="rankingimg3"/>
+                        <text v-if="index>2" class="textindex">{{index+1}}</text>
+                        <image class="comm_headimg" :src="item.avatar_small_url"/>
+                        <div class="wire_box">
+                            <text style="font-size:32px;" class="comsn_contil_font">{{item.username}}</text>
+                            <text style="padding-right:26px;font-size:28px;" class="comsn_contil_font">{{item.week_royalty_amount.toFixed(2)}}元</text>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </cell>
+        <cell v-if="noneData">
+            <nodata nodata_title="暂无收益排行榜"
+                    style="margin-bottom: 230px;padding-top: 100px;"></nodata>
+        </cell>
+        <cell>
+            <div class="commission_bom">
+                <text class="comsn_contil_font">邀请好友赚取更多佣金</text>
+                <image class="downward_img" :src="downwardImg"/>
+                <div @click="run" class="com_button">
+                    <text style="font-size:48px;color:white;">分 享</text>
+                </div>
+            </div>
+        </cell>
+    </list>
+    <div v-if="lpopup" class="lshare">
+        <div @click="lpopuphide" class="lshare_background"></div>
+        <div class="lshare_con">
+            <div class="lshare_con_background"></div>
+            <div class="lshare_title">
+                <text style="font-size:34px;color:#000;">分享</text>
+            </div>
+            <div style="flex-direction:row;justify-content:space-between;">
+                <div @click="lshareonclick(index)" class="lshare_content" v-for="(item,index) in shareitem">
+                    <image style="width:120px;height:120px;" :src="item.shareimg"/>
+                    <text style="padding-top:20px;font-size:30px;color:#000;">{{item.sharename}}</text>
+                </div>
+            </div>
+        </div>
+    </div>
+</osc-navpage>

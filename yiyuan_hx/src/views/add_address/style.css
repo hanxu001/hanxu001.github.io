@@ -1,0 +1,124 @@
+.banner-div {
+    width: 750px;
+    flex-direction: row;
+    background-color: #fff;
+    margin-bottom: 2px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.name {
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 30px;
+    flex-direction: row;
+    align-items: center;
+    font-size: 30px;
+}
+
+.input {
+    width: 480px;
+    height: 50px;
+    line-height: 50px;
+    flex-direction: row;
+    align-items: center;
+    word-break: break-all;
+    font-size: 30px;
+}
+.default-address {
+    height: 100px;
+    padding-left: 30px;
+    align-items: center;
+    background-color: white;
+    flex-direction: row;
+}
+
+.default-text {
+    flex: 1;
+    font-size: 30px;
+}
+
+.default-switch {
+    margin-right: 30px;
+}
+
+.save {
+    font-size: 30px;
+    margin-top: 30px;
+    border-radius: 10px;
+    background-color:#fc0048;
+    height: 80px;
+    text-align: center;
+    padding-top: 22px;
+    color: white;
+    width: 690px;
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+.dialog_div {
+    justify-content: center;
+    margin-left: 10px;
+    height: 80px;
+}
+
+.dialog_text_header {
+    padding-bottom: 5px;
+    border-bottom-color: #fff;
+}
+
+.dialog_div_click {
+    border-bottom-width: 3px;
+    border-bottom: solid;
+    border-bottom-color: red;
+    color: red;
+    padding-bottom: 5px;
+}
+.boy{
+    margin-right: 60px;
+    width: 102px;
+    height:64px;
+    background-color: #ddd;
+    border-radius: 32px;
+}
+.girl{
+    margin-right: 60px;
+    width: 102px;
+    height:64px;
+    background-color: pink;
+    border-radius: 32px;
+}
+.foo{
+    width:56px;
+    height: 56px;
+    background-color: #fff;
+    border-radius: 30px;
+    position: absolute;
+    left: 4px;
+    top:4px;
+    transition:all 0.4s;
+}
+.bar{
+    width:56px;
+    height: 56px;
+    background-color:#fc0048;
+    border-radius: 30px;
+    position: absolute;
+    left:42px;
+    top:4px;
+    transition:all 0.4s;
+}
+.area_top{
+    position:absolute;
+    bottom: 0px;
+    width: 750px;
+    background-color: #000;
+    opacity: 0.5;
+}
+.area-text{
+    background-color:#fff;
+    position:absolute;
+    bottom:0px;
+    width:750px;
+}

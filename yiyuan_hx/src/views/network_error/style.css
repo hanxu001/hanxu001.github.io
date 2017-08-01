@@ -1,0 +1,6 @@
+.network_root {
+  width: 750px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}

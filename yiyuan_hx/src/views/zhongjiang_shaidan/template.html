@@ -1,0 +1,27 @@
+
+<osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="naviBarLeftItemClick">
+
+    <div class="container">
+        <div class="box1 center">
+                <textarea id="textarea" class="textarea"
+                          type="text"
+                          disabled="false"
+                          rows="5"
+                          maxlength="10"
+                          ref="input1"
+                          placeholder="请输入100字以内的晒单描述" @input="inputEvent($event)" >
+                </textarea>
+        </div>
+        <div class="box2">
+            <div v-for="(imgitem,index) in imglist">
+                <image :src="imgitem" alt="" class="imgitem"></image>
+            </div>
+            <div class="border" @click="goChoose" v-if="showadd">
+                <image :src="image_address" alt="" style="width: 150px;height: 150px;"></image>
+            </div>
+        </div>
+        <div class="box3 center">
+            <div class="center btn" @click="goShai"><text style="color: #fff;font-size: 30px;">晒单</text></div>
+        </div>
+    </div>
+</osc-navpage>

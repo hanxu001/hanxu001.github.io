@@ -1,0 +1,593 @@
+<div @viewappear="pageRefresh">
+    <osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="naviBarLeftItemClick">
+        <div class="main">
+            <image class="image" :src="product.image_small_url"></image>
+            <div class="detail-div">
+                <text class="name-text">{{product.product_name}}</text>
+                <text class="common-text">本期期号:{{product.id}}</text>
+            </div>
+        </div>
+        <div class="bggray" style="height: 18px;"></div>
+        <scroller style="background-color: #fff;">
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==0&&myreceiver==''&&order.receiver==null">
+                <div class="row" style="height: 100px">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex:1" class="bgwhite"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex: 1;justify-content: space-between;align-items: center" >
+                        <text class="red fz30">请选择收货信息</text>
+                        <div class="bgred btn_s mr20" @click="goChoose">
+                            <text class="fff fz30">选择地址</text>
+                        </div>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px"></div>
+            </div>
+
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==0&&myreceiver!=''&&order.receiver==null">
+                <div class="row" :style="{height:(mylines+3)*70+'px'}">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1" class="bgwhite"></div>
+                        <div :class="['circle',saber?'bgred':'bggreen']"></div>
+                        <div style="width: 4px;flex: 1" :class="[saber?'bgwhite':'bgmiss']"></div>
+                    </div>
+                    <div style="flex: 1" class="col">
+                        <text :class="['fz30',saber?'red':'gray']">确认收货地址</text>
+                        <text class="gray fz30 mt10">{{myreceiver}}{{mymobile}}</text>
+                        <text class="gray fz30 mt10">{{myship_address}}</text>
+                        <div class="button row mt10" style="justify-content: flex-end;align-items: center;width: 750px;" v-if="saber">
+                            <div class="btn_s center bgred mr20 ml300" @click="goEnsure">
+                                <text class="fz30 fff">确认地址</text>
+                            </div>
+                            <div class="btn_s center bgyellow mr20" @click="goChoose">
+                                <text class="fz30 fff">修改地址</text>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;" v-if="!saber">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1" class="bgwhite" ></div>
+                    </div>
+                    <div class="bottomline row" style="flex: 1;justify-content: space-between;align-items: center">
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">待发货</text>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==0&&order.receiver!=null">
+                <div class="row" :style="{height:(mylines+2)*60+'px'}">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex: 1;justify-content: center">
+                        <text class="gray fz30">确定收货地址</text>
+                        <div class="row mt10">
+                            <text class="gray fz30 mr20">{{order.receiver}}</text>
+                            <text class="gray fz30">{{order.mobile}}</text>
+                        </div>
+                        <text class="gray fz30 mt10">{{order.ship_address}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex: 1;justify-content: space-between;align-items: center">
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">待发货</text>
+                    </div>
+                    <div class="bggray" style="height: 18px;margin-top: 20px"></div>
+                </div>
+            </div>
+
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==1">
+                <div class="row" :style="{height:(mylines+2)*60 + 'px'}" >
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex: 1;justify-content: center">
+                        <text class="gray fz30">确认收货地址</text>
+                        <div class="row mt10">
+                            <text class="gray fz30 mr20">{{order.receiver}}</text>
+                            <text class="gray fz30">{{order.mobile}}</text>
+                        </div>
+                        <text class="gray fz30 mt10">{{order.ship_address}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center">
+                        <text class="gray fz30">奖品派发</text>
+                        <text class="gray fz30 mt10">物流公司{{order.express_company_name}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;justify-content: space-between;align-items: center" >
+                        <text class="red fz30">快递状态</text>
+                        <text class="red fz30 mr20">待签收</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+            </div>
+
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==2">
+                <div class="row" :style="{height:(mylines+2)*60+'px'}">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center">
+                        <text class="gray fz30">确认收货地址</text>
+                        <div class="row mt10">
+                            <text class="gray fz30 mr20">{{order.receiver}}</text>
+                            <text class="gray fz30">{{order.mobile}}</text>
+                        </div>
+                        <text class="gray fz30 mt10">{{order.ship_address}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center" >
+                        <text class="fz30 gray">奖品派发</text>
+                        <text class="fz30 gray mt10">物流公司：{{order.express_company_name}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;align-items: center;justify-content: space-between;" >
+                        <text class="red fz30">快递状态</text>
+                        <text class="red fz30 mr20">已签收</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+                <div class="center"><text class="red fz30 mt30">完成晒单，领取随机红包奖励</text></div>
+                <div class="center mt30">
+                    <div :class="['btn',(product.share_status==0)?'bgred':'bggray']" @click="goShai(product.share_status)"><text class="fff fz30">去晒单</text></div>
+                </div>
+            </div>
+
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==3">
+                <div class="row" :style="{height:(mylines+2)*60+'px'}">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center">
+                        <text class="gray fz30">确认收货地址</text>
+                        <div class="row mt10">
+                            <text class="gray fz30 mr20">{{order.receiver}}</text>
+                            <text class="gray fz30">{{order.mobile}}</text>
+                        </div>
+                        <text class="gray fz30 mt10">{{order.ship_address}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;justify-content: space-between;align-items: center" >
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">已备货</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+            </div>
+
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==4">
+                <div class="row" :style="{height:(mylines+2)*60+'px'}">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center">
+                        <text class="gray fz30">确认收货地址</text>
+                        <div class="row mt10">
+                            <text class="gray fz30 mr20">{{order.receiver}}</text>
+                            <text class="gray fz30">{{order.mobile}}</text>
+                        </div>
+                        <text class="gray fz30 mt10">{{order.ship_address}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center" >
+                        <text class="fz30 gray">奖品派发</text>
+                        <text class="fz30 gray mt10">物流公司：{{order.express_company_name}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;align-items: center;justify-content: space-between;" >
+                        <text class="red fz30">快递状态</text>
+                        <text class="red fz30 mr20">已拒收</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+            </div>
+
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==5">
+                <div class="row" :style="{height:(mylines+2)*60+'px'}">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center">
+                        <text class="gray fz30">确认收货地址</text>
+                        <div class="row mt10">
+                            <text class="gray fz30 mr20">{{order.receiver}}</text>
+                            <text class="gray fz30">{{order.mobile}}</text>
+                        </div>
+                        <text class="gray fz30 mt10">{{order.ship_address}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center" >
+                        <text class="fz30 gray">奖品派发</text>
+                        <text class="fz30 gray mt10">物流公司：{{order.express_company_name}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;align-items: center;justify-content: space-between;" >
+                        <text class="red fz30">快递状态</text>
+                        <text class="red fz30 mr20">已退货</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+                <div class="center"><text class="red fz30 mt30">完成晒单，领取随机红包奖励</text></div>
+                <div class="center mt30">
+                    <div :class="['btn',(product.share_status==0)?'bgred':'bggray']" @click="goShai(product.share_status)"><text class="fff fz30">去晒单</text></div>
+                </div>
+            </div>
+
+            <div class="status" v-if="order.product_type==2&&order.shipped_status==0&&order.mobile==null">
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div :class="circle [saber?'bgred':'bggreen']"></div>
+                        <div style="width: 4px;flex: 1;" :class="[saber?'bgwhite':'bgmiss']"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content:center">
+                        <text :class="fz30 [saber?'red':'gray'] ">充值号码</text>
+                        <input type="tel"
+                               :id="input_tel"
+                               placeholder="请输入您的手机号码"
+                               class="fz30 gray mt10"
+                               maxlength=11
+                               @input="input($event)"
+                               autofocus="true" v-if="saber" />
+                        <text class="gray fz30 mt10" v-if="!saber">{{mobile}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;" v-if="!saber">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;justify-content:space-between;align-items: center;" >
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">待发货</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+                <div class="center mt30" @click="goEnsureMobile" v-if="saber">
+                    <div class="btn bgred"><text class="fff fz30">确定</text></div>
+                </div>
+            </div>
+
+            <div class="status" v-if="order.product_type==2&&order.shipped_status==0&&order.mobile!=null">
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content:center" >
+                        <text class="gray fz30">充值号码</text>
+                        <text class="gray fz30 mt10">{{order.mobile}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;justify-content:space-between;align-items: center;" >
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">待发货</text>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status" v-if="order.product_type==2&&order.shipped_status!=0">
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content:center" >
+                        <text class="gray fz30">充值号码</text>
+                        <text class="gray fz30 mt10">{{order.mobile}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;justify-content:space-between;align-items: center;" >
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">已发货</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+                <div class="center"><text class="red fz30 mt30">完成晒单，领取随机红包奖励1</text></div>
+                <div class="center mt30">
+                    <div :class="['btn',(product.share_status==0)?'bgred':'bggray']" @click="goShai(product.share_status)"><text class="fff fz30">去晒单</text></div>
+                </div>
+            </div>
+            <!--<image :src="icon_complete_transaction" class="onlinethat" v-if="order.shipped_status==2"></image>-->
+
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==3">
+                <div class="row" :style="{height:(mylines+2)*60+'px'}">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center">
+                        <text class="gray fz30">确认收货地址</text>
+                        <div class="row mt10">
+                            <text class="gray fz30 mr20">{{order.receiver}}</text>
+                            <text class="gray fz30">{{order.mobile}}</text>
+                        </div>
+                        <text class="gray fz30 mt10">{{order.ship_address}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;justify-content: space-between;align-items: center" >
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">已备货</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+            </div>
+
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==4">
+                <div class="row" :style="{height:(mylines+2)*60+'px'}">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center">
+                        <text class="gray fz30">确认收货地址</text>
+                        <div class="row mt10">
+                            <text class="gray fz30 mr20">{{order.receiver}}</text>
+                            <text class="gray fz30">{{order.mobile}}</text>
+                        </div>
+                        <text class="gray fz30 mt10">{{order.ship_address}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center" >
+                        <text class="fz30 gray">奖品派发</text>
+                        <text class="fz30 gray mt10">物流公司：{{order.express_company_name}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;align-items: center;justify-content: space-between;" >
+                        <text class="red fz30">快递状态</text>
+                        <text class="red fz30 mr20">已拒收</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+            </div>
+            <div class="status" v-if="order.product_type==1&&order.shipped_status==5">
+                <div class="row" :style="{height:(mylines+2)*60+'px'}">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center">
+                        <text class="gray fz30">确认收货地址</text>
+                        <div class="row mt10">
+                            <text class="gray fz30 mr20">{{order.receiver}}</text>
+                            <text class="gray fz30">{{order.mobile}}</text>
+                        </div>
+                        <text class="gray fz30 mt10">{{order.ship_address}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content: center" >
+                        <text class="fz30 gray">奖品派发</text>
+                        <text class="fz30 gray mt10">物流公司：{{order.express_company_name}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;align-items: center;justify-content: space-between;" >
+                        <text class="red fz30">快递状态</text>
+                        <text class="red fz30 mr20">已退货</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+                <div class="center"><text class="red fz30 mt30">完成晒单，领取随机红包奖励</text></div>
+                <div class="center mt30">
+                    <div :class="['btn',(product.share_status==0)?'bgred':'bggray']" @click="goShai(product.share_status)"><text class="fff fz30">去晒单</text></div>
+                </div>
+            </div>
+            <div class="status" v-if="order.product_type==2&&order.shipped_status==0&&order.mobile==null">
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div :class="circle [saber?'bgred':'bggreen']"></div>
+                        <div style="width: 4px;flex: 1;" :class="[saber?'bgwhite':'bgmiss']"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content:center">
+                        <text :class="fz30 [saber?'red':'gray']">充值号码</text>
+                        <input type="tel"
+                               :id="input_tel"
+                               placeholder="请输入您的手机号码"
+                               class="fz30 gray mt10"
+                               maxlength=11
+                               @input="input(event)"
+                               autofocus="true" v-if="saber" />
+                        <text class="gray fz30 mt10" v-if="!saber">{{mobile}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;" v-if="!saber">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;justify-content:space-between;align-items: center;" >
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">待发货</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+                <div class="center mt30" @click="goEnsureMobile" v-if="saber">
+                    <div class="btn bgred"><text class="fff fz30">确定</text></div>
+                </div>
+            </div>
+            <div class="status" v-if="order.product_type==2&&order.shipped_status==0&&order.mobile!=null">
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content:center" >
+                        <text class="gray fz30">充值号码</text>
+                        <text class="gray fz30 mt10">{{order.mobile}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;justify-content:space-between;align-items: center;" >
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">待发货</text>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status" v-if="order.product_type==2&&order.shipped_status!=0">
+                <div class="row" style="height: 120px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                        <div class="circle bggreen"></div>
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                    </div>
+                    <div class="bottomline" style="flex:1;justify-content:center" >
+                        <text class="gray fz30">充值号码</text>
+                        <text class="gray fz30 mt10">{{order.mobile}}</text>
+                    </div>
+                </div>
+                <div class="row" style="height: 100px;">
+                    <div class="center" style="flex: 0.2">
+                        <div style="width: 4px;flex: 1;" class="bgmiss"></div>
+                        <div class="circle bgred"></div>
+                        <div style="width: 4px;flex: 1;" class="bgwhite"></div>
+                    </div>
+                    <div class="bottomline row" style="flex:1;justify-content:space-between;align-items: center;" >
+                        <text class="red fz30">奖品派发</text>
+                        <text class="red fz30 mr20">已发货</text>
+                    </div>
+                </div>
+                <div class="bggray" style="height: 18px;margin-top: 20px;"></div>
+                <div class="center"><text class="red fz30 mt30">完成晒单，领取随机红包奖励</text></div>
+                <div class="center mt30">
+                    <div :class="['btn',(product.share_status==0)?'bgred':'bggray']" @click="goShai(product.share_status)"><text class="fff fz30">去晒单</text></div>
+                </div>
+            </div>
+        </scroller>
+        <image :src="icon_complete_transaction" class="onlinethat" v-if="order.shipped_status==2"></image>
+    </osc-navpage>
+</div>

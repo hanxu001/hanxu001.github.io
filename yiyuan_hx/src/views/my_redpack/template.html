@@ -1,0 +1,39 @@
+<osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="naviBarLeftItemClick"
+             :rightItemTitle="rightItemTitle" @naviBarRightItemClick="rightClick">
+    <div class="redpack_tab">
+        <div class="redpack_tabbox" v-for="(item,index) in redtablis" @click="ontab(index)">
+            <div class="bom_wire" :style="{'border-bottom-width':index==current?'2px':'0px'}">
+                <text class="tab_text" :style="{color:(index==current)?'#fc0048':'#808080'}">{{item}}</text>
+            </div>
+            <div v-if="index==0" class="left_wire"></div>
+        </div>
+    </div>
+    <yc-list @refresh="handleRefresh" @loading="onloading" ref="list">
+        <cell>
+            <div style="height:30px;"></div>
+            <!--有效红包列表-->
+            <div v-if="current==0&&!noneData&&replaceToggle" v-for="(item,index) in user_coupons_y">
+                <redpack-list :title="item.title"
+                              :instructions="item.instructions"
+                              :amount="item.amount"
+                              :end_at_date="item.end_at_date"
+                              :current="0"
+                              :status="item.status"
+                              @goUseClick="goUseClick"
+                />
+            </div>
+            <!--无效红包列表-->
+            <div v-if="current==1&&!noneData&&replaceToggle" v-for="item in user_coupons_n">
+                <redpack-list :title="item.title"
+                              :instructions="item.instructions"
+                              :amount="item.amount"
+                              :end_at_date="item.end_at_date"
+                              :current="1"
+                              :status="item.status"
+                              @goUseClick="goUseClick"
+                />
+            </div>
+            <nodata nodata_title="暂无红包" v-if="noneData"></nodata>
+        </cell>
+    </yc-list>
+</osc-navpage>

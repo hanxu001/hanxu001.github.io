@@ -1,0 +1,46 @@
+<div @viewappear="pageRefresh">
+    <osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="naviBarLeftItemClick"
+                 :rightItemTitle="rightItemTitle" @naviBarRightItemClick="rightClick">
+        <div class="integral">
+            <div class="integral_top">
+                <text class="integral_ttext">我的积分：</text>
+                <text class="integral_ttext text_red">{{myIntegral.balance==undefined?'0':myIntegral.balance}}</text>
+            </div>
+            <div class="integral_list" v-for="(item,index) in integralitem">
+                <text class="integral_ttext1" style="margin-left:50px;">{{item.titile}}</text>
+                <text class="integral_ttext1">{{item.num}}</text>
+                <div :class="['integral_but',index==3?'bgf':'']" @click="ongodo(index)">
+                    <text class="integral_buttxt">{{item.buttext}}</text>
+                </div>
+            </div>
+        </div>
+        <div class="other">
+            <div class="other_list" @click="onparticulars(item)" v-for="(item,index) in buttons">
+                <image class="other_img" :src="item.image_url"/>
+            </div>
+        </div>
+        <div class="explain">
+            <text class="explain_h1">规则说明：</text>
+            <text class="explain_p">1.通过微信或者支付宝消费1元，可获得10积分；</text>
+            <text class="explain_p">2.每邀请1位小伙伴，可获得50积分，每日前20位有效；</text>
+            <text class="explain_p">3.每日签到可获得50积分奖励；</text>
+            <text class="explain_p">4.分享APP可获得50积分奖励，每日首次分享有效；</text>
+        </div>
+
+        <div v-if="lpopup" class="lshare">
+            <div @click="lpopuphide" class="lshare_background"></div>
+            <div class="lshare_con">
+                <div class="lshare_con_background"></div>
+                <div class="lshare_title">
+                    <text style="font-size:34px;color:#000;">分享</text>
+                </div>
+                <div style="flex-direction:row;justify-content:space-between;">
+                    <div @click="lshareonclick(index)" class="lshare_content" v-for="(item,index) in shareitem">
+                        <image style="width:120px;height:120px;" :src="item.shareimg"/>
+                        <text style="padding-top:20px;font-size:30px;color:#000;">{{item.sharename}}</text>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </osc-navpage>
+</div>

@@ -1,0 +1,272 @@
+<div @viewappear="handleRefresh">
+    <osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="leftClick">
+
+        <yc-list @refresh="handleRefresh" @loading="onloading" ref="list" style="flex: 1;">
+            <cell style="background-color: #fff;">
+                <slider class="slider" interval="3000" auto-play="true">
+                    <div v-for="(item,index) in thumb_images" class="slider_image_div">
+                        <image class="slider_image" resize="cover" :src="item"></image>
+                    </div>
+                    <indicator class="indicator"></indicator>
+                </slider>
+            </cell>
+            <cell style="background-color: #fff;">
+                <!--进行中状态-->
+                <div class="doing" v-if="period_product.status == 1">
+                    <text class="product_name_text">{{period_product.product_name}}</text>
+                    <text class="product_title">{{period_product.title}}</text>
+                    <text class="product_issue">期号:{{period_product.id}}</text>
+                    <div class="process-banner">
+                        <div class="total">
+                            <div class="inner" :style="{width:parseInt(750*period_product.progress_percent/100),height: 14+'px'}">
+                                <div class="inner_gradient" :style="{width:parseInt(750*period_product.progress_percent/100),height: 14+'px'}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="num_info">
+                        <text class="num_info_text">已购买:{{period_product.buy_num}}</text>
+                        <text class="num_info_text">总需:{{period_product.max_num==undefined?'':period_product.max_num}}</text>
+                        <text class="num_info_text_red">剩余:{{period_product.rest_num==undefined?'':period_product.rest_num}}</text>
+                    </div>
+                </div>
+                <!--倒计时状态-->
+                <div class="count-down" v-if="period_product.status == 2">
+                    <text class="product_name_text">{{period_product.product_name}}</text>
+                    <text class="product_issue">期号:{{period_product.id}}</text>
+                    <yc-countdown
+                            class="ctno1"
+                            :end-at="period_product.end_at"
+                            interval="10"
+                            :now="product_data.now_at*1000"
+                            @finish="timerFinish"
+                    ></yc-countdown>
+                </div>
+                <!--已揭晓状态-->
+                <div class="previous_period" v-if="period_product.status == 3">
+                    <text class="product_name_text">{{period_product.product_name}}</text>
+                    <text class="product_issue">期号:{{period_product.id}}</text>
+                    <image :src="beijing_bg" class="beijing_bg"></image>
+                    <div class="beijing_con">
+                        <image :src="lucy_user.avatar_url" class="beijing_header"></image>
+                        <div class="beijing_message">
+                            <text style="font-size:30px;color: #1eb3fb;">{{lucy_user.username==undefined?'':lucy_user.username}}</text>
+                            <text style="font-size:28px;color: #808080;margin-top: 12px;">{{lucy_user.ip_text}}</text>
+                            <text style="font-size:28px;color: #808080;margin-top: 12px">{{getLocalTime(period_product.end_at)}}</text>
+                        </div>
+                        <div style="position: absolute;right: 50px;top: 50px;flex-direction: row;">
+                            <text style="font-size:28px;color: #fc0048;">{{period_product.user_buy_num==undefined?'':period_product.user_buy_num}}</text>
+                            <text style="font-size:28px;color: #808080;">人次</text>
+                        </div>
+                        <text style="position: absolute;right: 50px;bottom: 30px;font-size:28px;color: #323232;" @click="calculation_details">查看详情>></text>
+                    </div>
+                    <image :src="beijing_flag" class="beijing_flag"></image>
+                    <div class="flag_con">
+                        <text class="flag_con_text">幸运号码</text>
+                        <text class="flag_con_text2">{{period_product.luck_no}}</text>
+                    </div>
+                </div>
+            </cell>
+            <cell>
+                <!--我的号码-->
+                <div class="mynumber" v-if="mynums.length>0">
+                <div style="padding: 12px">
+                <text style="font-size:30px;color: #4d4d4d;">我的号码</text>
+                </div>
+                <div style="height: 2px;background-color: #EBEBEB;"></div>
+                <div class="star">
+                <div class="star_conten">
+                <div v-if="index>3?saber:true" v-for="(mynum,index) in mynums" class="star_item">
+                <text style="font-size:28;color:#4d4d4d;">{{mynum}}</text>
+                </div>
+                </div>
+                <div v-if="mynums.length>4"
+                style="align-items:center;height:60px;width:80px;justify-content:center"
+                @click="showMore">
+                <text style="color:red;font-size:28px;">{{saber?'收起':'更多'}}</text>
+                </div>
+                </div>
+                </div>
+            </cell>
+            <cell style="background-color: #fff;">
+                <div style="height: 20px;background-color: #f7f7f7;"></div>
+                <div class="nav_title">
+                    <div class="_title_item" v-for="(item,index) in navList"
+                         @click="ontab(index)">
+                        <text class="tab_text" :style="{'color':(index==current)?'#fc0048':'#808080'}">{{item}}</text>
+                        <text class="line-cross" :style="{'border-color':(index==current)?'#fc0048':'#fff'}"></text>
+                    </div>
+                </div>
+            </cell>
+            <cell style="background-color: #fff;">
+                <!--参与记录-->
+                <div class="winner_list"
+                     v-for="(puser,index) in period_product_users"
+                     v-if="replaceToggle && current==0">
+                    <div class="winner_item">
+                        <image class="period_image_avatar"
+                               :src="puser.user.avatar_url">
+                        </image>
+                        <div style="margin-left: 12px;">
+                            <div style="flex-direction: row;margin-top: 10px;align-items: center">
+                                <text class="period_product_users_text_orange">{{puser.user.username}}</text>
+                                <text class="period_product_users_text_gray">({{puser.user.ip_text}})</text>
+                            </div>
+                            <div style="flex-direction: row;margin-top: 12px;align-items: center">
+                                <text class="previous_period_text">本期购买:</text>
+                                <text style="color: red;font-size:30px ;margin-left: 5px;margin-right: 5px;margin-top: 5px;">{{puser.num}}</text>
+                                <text class="previous_period_text">人次</text>
+                            </div>
+                            <text class="previous_period_text">参与时间:{{getLocalTime(puser.created_at)}}</text>
+                        </div>
+                    </div>
+                </div>
+                <!--往期揭晓-->
+                <div class="content_list_wrap"
+                     @click="onclickDetails(item.id)"
+                     v-if="replaceToggle && current==1"
+                     v-for="item in publish_data">
+                    <div class="img_wrap">
+                        <image class="img" :src="item.user.avatar_small_url"></image>
+                    </div>
+                    <div class="right_info">
+                        <div class="right_info_txt item_user_name">
+                            <text style="font-size: 32px">获奖者：</text>
+                            <text class="user_name">{{item.user.username}}</text>
+                        </div>
+                        <text class="right_info_txt">商品期数：{{item.id}}</text>
+                        <text class="right_info_txt">揭晓时间：{{getLocalTime(item.end_at)}}</text>
+                        <div class="right_info_txt item_lucky_num">
+                            <text style="font-size: 30px;color: #9c9c9c">幸运号码：</text>
+                            <text class="lucky_num">{{item.luck_no}}</text>
+                        </div>
+                        <div class="right_info_txt item_buy_num">
+                            <text style="font-size: 30px;color: #9c9c9c">本期购买：</text>
+                            <text class="buy_num">{{item.user_buy_num}}</text>
+                            <text style="font-size: 30px;color: #9c9c9c;margin-left: 3px">人次</text>
+                        </div>
+                    </div>
+                </div>
+                <!--夺宝规则-->
+                <div class="sd_rules" v-if="replaceToggle && current==2">
+                    <text class="rule_text">  *每件商品参考市场价平分成相应“等份”，1分对应1个夺宝号码。</text>
+                    <text class="rule_text">  *同一件商品可以购买多次或一次购买多份。</text>
+                    <text class="rule_text">  *当一件商品所有“等份”全部售出后计算出“幸运夺宝码”，拥有“幸运夺宝码”者即可获得此商品。</text>
+                    <text class="rule_text">  *幸运夺宝码计算方法：</text>
+                    <text class="rule_text">  1)取该商品最后购买时间前全站所有商品50条购买时间记录（限时揭晓商品取截取时间前全站所有商品50条购买记录）。</text>
+                    <text class="rule_text">  2)取最新一期时时彩开奖号码。</text>
+                    <text class="rule_text">  3)时间按时、分、秒、毫秒依次排列组成一组数值。</text>
+                    <text class="rule_text">  4)将这50组数值+最新一期时时彩开奖号码之和除以商品总需参与人次后取余数，余数加上10,000,001即为“幸运夺宝码”。</text>
+                </div>
+                <nodata v-if="noneData && current==0" nodata_title="暂无记录" style="margin-bottom: 30px;padding-top: 100px"></nodata>
+                <nodata v-if="noneData2 && current==1" nodata_title="暂无记录" style="margin-bottom: 30px;padding-top: 100px"></nodata>
+            </cell>
+        </yc-list>
+        <div :style="{height:show_bottom_buy?120+'px':106+'px'}"></div>
+    </osc-navpage>
+    <!--底部栏-->
+    <div class="bottom_buy" v-if="false">
+        <div class="btn-operator"  @click="buy_reduce">
+            <text>-</text>
+        </div>
+        <div class="btn-num" >
+            <input ref="buy_input"
+                   type="tel"
+                   style="color: red;font-size: 36px;text-align: center; width: 100px;height: 80px"
+                   placeholder-color="#ff0000"
+                   :value="buy_num"
+                   @input="onInput"
+                   maxlength="10" />
+        </div>
+        <div class="btn-operator" @click="buy_add">
+            <text>+</text>
+        </div>
+        <!--包尾-->
+        <div class="btn-max-buy" @click="buy_max">
+            <text style="color: white;font-size: 30px;text-align: center;line-height: 30px;">包尾</text>
+        </div>
+        <!--金币-->
+        <div style="flex-direction:row;align-items:center;">
+            <text style="color:#707070;">共</text>
+            <text style="font-size:32px;color:red;">{{buy_num}}</text>
+            <text style="color:#707070;">金币</text>
+        </div>
+        <!--立即购买-->
+        <div class="btn-now" @click="buy_current">
+            <text style="color: white;font-size: 30;text-align: center;line-height: 30;  ">立即购买</text>
+        </div>
+    </div>
+    <!--底部栏-新版-->
+    <div class="shadow" @click="goClose" v-if="!bottom_toggle"></div>
+    <div class="buy_new" v-if="show_bottom_buy">
+        <div class="buy_new_top" v-if="!bottom_toggle">
+            <div class="new_top_1">
+                <text class="top_1_text">参与人次</text>
+            </div>
+            <div class="top_1_x" @click="goClose"><image :src="close_icon" alt="" class="top_1_icon"></image></div>
+            <div class="new_top_23">
+                <div class="new_top_3">
+                    <text class="top_3_text">金币：</text>
+                    <text class="top_3_value">{{buy_num}}</text>
+                </div>
+                <div class="new_top_2">
+                    <div class="top_2_div1" @click="buy_reduce"><text class="top_2_text">-</text></div>
+                    <div class="top_2_div2">
+                        <input type="tel"
+                               style="color: #5c5c5c;font-size: 30;text-align: center; width: 200px;align-items: center;justify-content: center"
+                               ref="buy_input"
+                               :value="buy_num"
+                               maxlength="5"
+                               @input="onInput"/>
+                    </div>
+                    <div class="top_2_div1" @click="buy_add"><text class="top_2_text">+</text></div>
+                </div>
+            </div>
+            <div class="new_top_4">
+                <div :class="['top_4_div',item.top_4_toggle && item.top_4_can?'top_4_div_default':''||!item.top_4_toggle && item.top_4_can?'top_4_div_red':'top_4_div_white']"
+                     v-for="(item,index) in top_4_data"
+                     @click="buy_new(index,item.num,item.top_4_can)">
+                    <text :class="[item.top_4_can?'top_2_text':'top_2_text_white']">{{item.num}}</text>
+                </div>
+            </div>
+        </div>
+        <div class="buy_new_bottom">
+            <div class="new_bottom_div" @click="goOpen">
+                <text class="new_bottom_text">立即参与</text>
+            </div>
+        </div>
+        <div class="top_1_imgbox" v-if="!bottom_toggle"><image class="top_1_img" :src="period_product.image_small_url"></image></div>
+    </div>
+    <!--底部栏(立即前往)-->
+    <div class="bottom_buy" v-if="show_get_away">
+        <text style="font-size:32px;">新一期正在火热进行中...</text>
+        <!--立即前往-->
+        <div class="btn-now" @click="onGetAway">
+            <text style="color: white;font-size: 30px;text-align: center;line-height: 30px;">立即前往</text>
+        </div>
+    </div>
+    <!--弹幕-->
+    <div class="barrage_shadow" v-if="barrage_toggle">
+        <div class="barrage">
+            <div class="barrage-item" v-for="(item,index) in barrageList" v-if="index == barrage_index">
+                <image class="barrage_img"
+                       :src="item.avatar_small_url">
+                </image>
+                <div style="flex-direction: row;">
+                    <text class="barrage-text">{{item.username}}</text>
+                    <text class="barrage-text">参加了{{item.num}}人次,{{barrage_second}}秒前</text>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="barrage_s" v-if="barrage_toggle">
+        <div class="barrage-item" v-for="(item,index) in barrageList" v-if="index == barrage_index">
+            <image class="barrage_img"
+                   :src="item.avatar_small_url">
+            </image>
+            <div style="flex-direction: row;">
+                <text class="barrage-text">{{item.username}}</text>
+                <text class="barrage-text">参加了{{item.num}}人次,{{barrage_second}}秒前</text>
+            </div>
+        </div>
+    </div>
+</div>

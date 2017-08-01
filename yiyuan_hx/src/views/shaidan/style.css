@@ -1,0 +1,88 @@
+.sigle-item{
+    background-color: #fff;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    flex-direction: row;
+}
+.share_content{
+    background-color: #f2f2f2;
+    padding-top: 36px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+}
+.user_info{
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    padding-bottom: 10px;
+}
+.product-image{
+    width: 166px;
+    height: 166px;
+    border-radius:10px;
+}
+.middle_item{
+    margin-left: 16px;
+    margin-right: 16px;
+}
+.sigle_item_title{
+    font-size: 26px;
+    color:#323232;
+    margin-bottom: 20px;
+    text-overflow: ellipsis;
+}
+.sigle_item_id{
+    font-size: 24px;
+    color: #f51d4b;
+    margin-bottom: 28px;
+    text-overflow: ellipsis;
+}
+.sigle_item_content{
+    font-size: 24px;
+    color: #323232;
+    margin-bottom: 30px;
+}
+.sigle-item_img{
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 30px;
+    border-bottom-color: #D7D7D7;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+}
+.liked{
+    color: #f51d4b;
+}
+.no_like{
+    color: #686868;
+}
+.liketext{
+    font-size: 32px;
+    color: #686868;
+}
+.list {
+    flex-direction: column;
+    overflow: hidden;
+    width: 750px;
+    background-color: #f2f2f2;
+
+}
+.refresh_view {
+    position:relative;
+    /*top:140;*/
+    /*left:0;*/
+    height: 140px;
+    justify-content: center;
+    width: 750px;
+    align-items: center;
+}
+.loading_view {
+    height: 140px;
+    justify-content: center;
+    width: 750px;
+    align-items: center;
+}

@@ -1,0 +1,138 @@
+.integral{
+    margin-top:30px;
+    margin-left:30px;
+    margin-right:30px;
+    width:690px;
+    border-radius:20px;
+    background-color:white;
+    padding-bottom:20px;
+    padding-left:20px;
+    padding-right:20px;
+}
+.integral_top{
+    height:80px;
+    flex-direction:row;
+    border-bottom-color:#e6e6e6;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    align-items: center;
+}
+.integral_list{
+    flex-direction:row;
+    justify-content: space-between;
+    height:98px;
+    align-items: center;
+    border-bottom-style:solid;
+    border-bottom-width: 2px;
+    border-bottom-color: #e6e6e6;
+}
+.integral_ttext{
+    font-size:36px;
+    color:#4d4d4d;
+}
+.integral_ttext1{
+    font-size:30px;
+    color:#4d4d4d;
+}
+.text_red{
+    color:#ff0043;
+}
+.integral_but{
+    margin-right: 34px;
+    width:136px;
+    height:54px;
+    border-radius:26px;
+    background-color:#ff0043;
+    justify-content: center;
+    align-items: center;
+}
+
+.bgf{background-color: #fff}
+
+.integral_buttxt{
+    font-size:32px;
+    color:white;
+}
+.other{
+    margin-top:30px;
+    margin-left:30px;
+    margin-right:30px;
+    background-color:white;
+    border-radius: 20px;
+    height:220px;
+    width:690px;
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:20px;
+    padding-right:20px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.other_list{
+    width:164px;
+    height:164px;
+    border-radius:82px;
+}
+.other_img{
+    width:164px;
+    height:164px;
+    border-radius:82px;
+}
+.explain{
+    margin-top:28px;
+    margin-left:30px;
+    margin-right:30px;
+}
+.explain_h1{
+    font-size:32px;
+    color:#222;
+    margin-bottom:10px;
+}
+.explain_p{
+    font-size:28px;
+    color:#333;
+    margin-top: 4px;
+}
+.lshare{
+    position: absolute;
+    width:750px;
+    bottom: 0;
+    left: 0;
+    flex: 1;
+}
+.lshare_background{
+    background-color:#000;
+    opacity:0.5;
+    width: 750px;
+    height: 3000px;
+}
+.lshare_con{
+    bottom:10px;
+    left: 0;
+    height:318px;
+    width: 750px;
+    position: absolute;
+}
+.lshare_con_background{
+    background-color:white;
+    opacity:0.5;
+    height:318px;
+    width: 750px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.lshare_title{
+    height:98px;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-color: white;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+}
+.lshare_content{
+    padding-top:20px;
+    align-items: center;
+    width:186px;
+}

@@ -1,0 +1,40 @@
+<osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="naviBarLeftItemClick">
+    <yc-list @refresh="handleRefresh" @loading="onloading" ref="list">
+        <cell>
+            <div style="height:30px;"></div>
+        </cell>
+        <!--有效红包列表-->
+        <cell v-for="(item,index) in coupons">
+            <redpack-list :title="item.title"
+                          :instructions="item.instructions"
+                          :amount="item.amount"
+                          :score="item.score"
+                          :id="item.id"
+                          :exchange="true"
+                          @exchangeButClick="exchangeButClick"/>
+        </cell>
+        <cell>
+            <nodata v-if="noneData" nodata_title="没有可兑换红包"/>
+        </cell>
+        <cell>
+            <modals-box mldalswidth="370px"
+                        title="恭喜您"
+                        @onClose="onClose"
+                        @onButton="onButton"
+                        :content="'兑换成功了，恭喜您获得'+mynum+'元红包'"
+                        button_text="确定"
+                        :bg_state="bg_state"
+                        v-if="alert_state && bg_state"/>
+        </cell>
+        <cell>
+            <modals-box mldalswidth="370px"
+                        title="好可惜"
+                        @onClose="onClose"
+                        @onButton="onButton"
+                        content="兑换失败,您的积分不足"
+                        button_text="赚积分"
+                        :bg_state="bg_state"
+                        v-if="alert_state && !bg_state"/>
+        </cell>
+    </yc-list>
+</osc-navpage>

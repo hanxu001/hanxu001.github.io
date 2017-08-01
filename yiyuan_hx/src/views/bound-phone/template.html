@@ -1,0 +1,25 @@
+<osc-navpage :title="title"  right-item-title="跳过" right-item-color="white" @naviBarRightItemClick="rightBarClick">
+
+    <div class="container">
+        <!--<div style="height: 50px;"></div>-->
+        <image :src="image_top" alt="" class="logo" :style="{height:HEIGHT+'px'}" v-if="isShow"></image>
+
+        <div class="one">
+            <image :src="image_phone" alt="" class="icon"></image>
+            <input :id="input_tel" type="tel" placeholder="请输入您的手机号" class="input" maxlength="11" @input="input(1,$event)" />
+        </div>
+        <div class="two">
+            <div class="left">
+                <image :src="image_code" alt="" class="icon"></image>
+                <input :id="input_code" type="tel" placeholder="请输入验证码" class="input input2" maxlength="4" @input="input(2,$event)" />
+            </div>
+            <div class="right bgred center" @click="getAuthCode">
+                <text class="fff">{{auth_text}}</text>
+            </div>
+        </div>
+        <div class="three center bgred" @click="goBind">
+            <text class="fff">绑定手机号</text>
+        </div>
+    </div>
+
+</osc-navpage>

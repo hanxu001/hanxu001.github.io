@@ -1,0 +1,33 @@
+.first_area_img{
+    width: 720px; height: 720px;
+    margin-top: 10px;
+}
+.first_area{
+    min-height: 100px;
+    background-color: #F8F8FF;
+    padding: 15px;
+}
+
+.info{
+    min-height: 200px;
+    background-color: #DC143C;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.line-limit-length {
+    font-size: 28px;
+    lines: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #fff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.sha_text{
+    margin-top:30px;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333333;
+}

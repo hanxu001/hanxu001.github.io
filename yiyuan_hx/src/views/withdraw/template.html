@@ -1,0 +1,52 @@
+<osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="naviBarLeftItemClick">
+    <div class="withdraw_top">
+        <image class="money_img" :src="moneybag_img"/>
+        <text class="text1">佣金余额</text>
+        <text class="text2">{{royalty_amount}}</text>
+        <div class="withdraw_but" @click="withdrawButClick(0)">
+            <text class="text1">兑换金币</text>
+            <text class="text3">(最少1元)</text>
+            <image class="right_back" :src="right_back"/>
+        </div>
+        <div class="withdraw_but" @click="withdrawButClick(1)">
+            <div class="withdraw_wire"></div>
+            <text class="text1">提现到支付宝</text>
+            <text class="text3">(满100可提，手续费2%)</text>
+            <image class="right_back" :src="right_back"/>
+        </div>
+    </div>
+    <div class="explain">
+        <text class="explain_h1">提现说明：</text>
+        <text class="explain_p">1.兑换金币为实时到账，每次兑换不能少于1金币；</text>
+        <text class="explain_p">2.支付宝提现单笔最少100元，如不满足则无法提现；</text>
+        <text class="explain_p">3.提现成功后，审核日期为5个工作日，请耐心等待；</text>
+        <text class="explain_p">4.若用户使用不正当手段参与获取佣金，官方将有权取消提现申请，且冻结该账号；</text>
+        <text class="explain_p">5.官方拥有最终解释权；</text>
+    </div>
+
+    <!--弹窗-->
+    <div class="modals" v-if="withdraw_but_toggle">
+        <div class="modals_bg"  @click="onclose"></div>
+        <div class="modalscon">
+            <div class="close_box" style="width:492px;">
+                <image @click="onclose" :src="close_icon" class="close"></image>
+            </div>
+            <div class="modalscons" style="width:492px;">
+                <text class="red_title">{{myindex?'提现到支付宝':'兑换金币'}}</text>
+                <div :class="[myindex?'input_box1':'input_box']">
+                    <input ref="input1" type="tel" @focus="onFocus(1,$event)" :id="input_amount" :class="[myindex?'input2':'input1']" :placeholder="(myindex?'可提现金额':'最多可兑换')+royalty_amount+(myindex?'元':'金币')"
+                           @input="onmyinput(1,$event)"/>
+                    <div class="line"></div>
+                    <div v-if="myindex">
+                        <input ref="input2" @focus="onFocus(2,$event)" class="input2" placeholder="支付宝账号" @input="onmyinput(2,$event)"/>
+                        <div class="line"/>
+                        <input type="text" ref="input3" @focus="onFocus(3,$event)" class="input2" placeholder="姓名" @input="onmyinput(3,$event)"/>
+                        <div class="line"/>
+                    </div>
+                </div>
+                <div @click="onbutton(myindex)" class="button1"><text class="but_text">确定</text></div>
+            </div>
+            <div style="height:70px;"></div>
+        </div>
+    </div>
+</osc-navpage>

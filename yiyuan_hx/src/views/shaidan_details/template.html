@@ -1,0 +1,19 @@
+
+<osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="naviBarLeftItemClick">
+    <scroller append="tree">
+        <div class="first_area">
+            <div class="info" @click="onGoodsClick(shaidan_data.id)">
+                <text class="line-limit-length">{{shaidan_data.product_name}}</text>
+                <text class="line-limit-length" >商品期数:  {{shaidan_data.id}}</text>
+                <text class="line-limit-length" >幸运号码:  {{shaidan_data.luck_no}}</text>
+                <text class="line-limit-length" >揭晓时间:  {{getLocalTime(shaidan_data.end_at)}}</text>
+            </div>
+            <text class="sha_text">{{shaidan_data.share_content}}</text>
+            <div style="flex-direction: column">
+                <image v-if="!shaidan_data.share_image0_url==''" class="first_area_img"  :src="shaidan_data.share_image0_url"></image>
+                <image v-if="!shaidan_data.share_image1_url==''" class="first_area_img"  :src="shaidan_data.share_image1_url"></image>
+                <image v-if="!shaidan_data.share_image2_url==''" class="first_area_img"  :src="shaidan_data.share_image2_url"></image>
+            </div>
+        </div>
+    </scroller>
+</osc-navpage>

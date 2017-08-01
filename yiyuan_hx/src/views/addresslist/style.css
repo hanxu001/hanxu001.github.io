@@ -1,0 +1,106 @@
+.refresh_view {
+    position:relative;
+    /*top:140;*/
+    /*left:0;*/
+    height: 140px;
+    justify-content: center;
+    width: 750px;
+    align-items: center;
+}
+.loading_view {
+    height:140px;
+    justify-content: center;
+    width: 750px;
+    align-items: center;
+}
+
+.content {
+    padding-bottom: 20px;
+    background-color: #e9e9e9;
+}
+
+.common {
+    background-color: white;
+    padding-left: 20px;
+}
+
+.top-div {
+    padding-top: 20px;
+    flex-direction: column;
+}
+
+.info-div {
+    flex-direction: row;
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #e9e9e9;
+}
+
+.name {
+    color: #ccc;
+}
+
+.tel {
+    margin-left: 20px;
+    color: #00aeff;
+}
+
+.bottom-div {
+    margin-top: 2px;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+}
+
+.img-div {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border-width: 4px;
+    border-color: #e9e9e9;
+}
+
+.img-inner {
+    width: 20px;
+    height: 20px;
+    background-color: #00B409;
+    border-radius: 10px;
+}
+
+.default-address {
+    flex: 1;
+    margin-left: 20px;
+    color:#fc0048;
+}
+
+.edit {
+    background-color: #00B409;
+    margin-right: 20px;
+    border-radius: 10px;
+    width: 110px;
+    height: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete {
+    background-color: red;
+    margin-right: 20px;
+    border-radius: 10px;
+    width: 110px;
+    height: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

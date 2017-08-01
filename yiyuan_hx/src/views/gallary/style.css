@@ -1,0 +1,18 @@
+.indicator {
+    position: absolute;
+    width: 750px;
+    height: 50px;
+    top: 700px;
+    left: 0px;
+    itemColor: #dddddd;
+    itemSelectedColor: rgb(40, 96, 144);
+}
+.slider {
+    align-content: center;
+    width: 750px;
+    height: 750px;
+}
+.slider_image{
+    width: 750px;
+    height: 750px;
+}

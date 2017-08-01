@@ -23,7 +23,7 @@
     }
     .marquee_con{
         padding-left: 10px;
-        padding-right: 10px;
+        padding-right: 0px;
         align-items: center;
         flex-direction: row;
         height: 60px;

@@ -1,0 +1,31 @@
+<osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="naviBarLeftItemClick">
+    <yc-list ref="list" @refresh="handleRefresh" @loading="onloading"  style="flex-direction: column">
+        <cell v-for="item in publish_data">
+            <div class="content_list_wrap" @click="onclickDetails(item.id)">
+                <div class="img_wrap">
+                    <image class="img" :src="item.user.avatar_small_url"></image>
+                </div>
+                <div class="right_info">
+                    <div class="right_info_txt item_user_name">
+                        <text style="font-size: 32px">获奖者：</text>
+                        <text class="user_name">{{item.user.username}}</text>
+                    </div>
+                    <text class="right_info_txt">商品期数：{{item.id}}</text>
+                    <text class="right_info_txt">揭晓时间：{{getLocalTime(item.end_at)}}</text>
+                    <div class="right_info_txt item_lucky_num">
+                        <text style="font-size: 30px;color: #9c9c9c">幸运号码：</text>
+                        <text class="lucky_num">{{item.luck_no}}</text>
+                    </div>
+                    <div class="right_info_txt item_buy_num">
+                        <text style="font-size: 30px;color: #9c9c9c">本期购买：</text>
+                        <text class="buy_num">{{item.user_buy_num}}</text>
+                        <text style="font-size: 30px;color: #9c9c9c;margin-left: 3px">人次</text>
+                    </div>
+                </div>
+            </div>
+        </cell>
+        <cell>
+            <nodata v-if="noneData" nodata_title="暂无往期记录" style="margin-bottom: 230px;padding-top: 100px"></nodata>
+        </cell>
+    </yc-list>
+</osc-navpage>

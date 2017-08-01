@@ -1,0 +1,96 @@
+<osc-navpage :title="title">
+    <yc-list @refresh="handleRefresh" @loading="onloading" ref="list" @loadMore="loadMore">
+        <!--<cell class="list_info" v-for="(item,index) in period_products" @click="gotodetails(item.id)">-->
+            <!--<div class="content">-->
+                <!--<div class="left-content">-->
+                    <!--<image class="left_img" :src="item.image_small_url"></image>-->
+                <!--</div>-->
+                <!--<image v-if="item.status == 1" class="bgImage" :src="bgImage"></image>-->
+                <!--<div class="right_content">-->
+                    <!--<text class="r_c_item r_margin">{{item.product_name}}</text>-->
+                    <!--&lt;!&ndash;进行中&ndash;&gt;-->
+                    <!--<div v-if="item.status == 1">-->
+                        <!--<text class="r_content_txt r_margin">本期期号：{{item.id}}</text>-->
+                        <!--<text class="r_content_txt r_margin">揭晓倒计时</text>-->
+                        <!--<div style="flex-direction: row;">-->
+                            <!--<image style="width: 60px;height: 60px;margin-right: 5px" :src="daojishiImage"></image>-->
+                            <!--<yc-countdown class="ctno1"-->
+                                          <!--interval="10"-->
+                                          <!--:end-at="item.end_at"-->
+                                          <!--:now="now"-->
+                                          <!--@finish="timerFinish(index)"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--&lt;!&ndash;开奖中&ndash;&gt;-->
+                    <!--<div v-if="item.status == 2" style="flex-direction: column">-->
+                        <!--<text class="r_content_txt r_margin">本期期号：{{item.id}}</text>-->
+                        <!--<text class="r_content_txt r_margin">揭晓倒计时</text>-->
+                        <!--<text class="r_content_compute">正在计算...</text>-->
+                    <!--</div>-->
+
+                    <!--&lt;!&ndash;已结束商品&ndash;&gt;-->
+                    <!--<div v-if="item.status == 3" style="flex-direction: column">-->
+                        <!--<text class="r_content_txt r_margin">本期期号：{{item.id}}</text>-->
+                        <!--<div class="r_margin" style="flex-direction: row; justify-content: flex-start;">-->
+                            <!--<text class="r_content_txt">获奖者：</text>-->
+                            <!--<text class="r_content_txt r_username">{{item.user.username}}</text>-->
+                        <!--</div>-->
+                        <!--<div class="r_margin" style="flex-direction: row; justify-content: flex-start;">-->
+                            <!--<text class="r_content_txt">本次购买：</text>-->
+                            <!--<text class="r_content_txt r_buy_num">{{item.user_buy_num}}</text>-->
+                            <!--<text class="r_content_txt">人次</text>-->
+                        <!--</div>-->
+                        <!--<text class="r_content_txt">揭晓时间：{{getLocalTime(item.end_at)}}</text>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</cell>-->
+        <cell>
+            <div class="goods_list">
+                <div :class="['good_item',index%2==0?'mr1':'ml1',index>1?'mt2':'']"
+                     v-for="(item,index) in period_products"
+                     @click="gotodetails(item.id)">
+                    <div style="height: 300px;justify-content: flex-start;align-items: center">
+                        <image class="item_img" :src="item.image_small_url"></image>
+                        <text class="item_title">{{item.product_name}}</text>
+                    </div>
+                    <!--进行中-->
+                    <div v-if="item.status == 1" style="flex-direction: column;width: 342px;" class="border">
+                        <text class="r_content_txt r_margin">本期期号：{{item.id}}</text>
+                        <text class="r_content_txt r_margin">揭晓倒计时</text>
+                        <div style="flex-direction: row;" class="r_margin">
+                            <image style="width: 32px;height: 32px;margin-right: 5px" :src="daojishiImage"></image>
+                            <text style="font-size:30px;color: #f52d4b;">即将揭晓</text>
+                        </div>
+                        <yc-countdown class="ctno1"
+                                      interval="10"
+                                      :end-at="item.end_at"
+                                      :now="now"
+                                      @finish="timerFinish(index)"/>
+                    </div>
+                    <!--开奖中-->
+                    <div v-if="item.status == 2" style="flex-direction: column;width: 342px;" class="border">
+                        <text class="r_content_txt r_margin">本期期号：{{item.id}}</text>
+                        <text class="r_content_txt r_margin">揭晓倒计时</text>
+                        <text class="r_content_compute r_margin">正在计算...</text>
+                    </div>
+                    <!--已结束商品-->
+                    <div v-if="item.status == 3" style="flex-direction: column;width: 342px;" class="border">
+                        <text class="r_content_txt r_margin">本期期号：{{item.id}}</text>
+                        <div class="r_margin" style="flex-direction: row; justify-content: flex-start;">
+                            <text class="r_content_txt">获奖者：</text>
+                            <text class="r_content_txt r_username">{{item.user.username}}</text>
+                        </div>
+                        <div class="r_margin" style="flex-direction: row; justify-content: flex-start;">
+                            <text class="r_content_txt">本次购买：</text>
+                            <text class="r_content_txt r_buy_num">{{item.user_buy_num}}</text>
+                            <text class="r_content_txt">人次</text>
+                        </div>
+                        <text class="r_content_txt r_margin">揭晓时间：{{getLocalTime(item.end_at)}}</text>
+                    </div>
+                </div>
+            </div>
+        </cell>
+    </yc-list>
+</osc-navpage>

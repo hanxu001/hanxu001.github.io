@@ -1,0 +1,45 @@
+<osc-navpage :title="title" :leftImageSrc="left_item_src" @naviBarLeftItemClick="leftClick">
+    <div class="classify">
+        <div class="classify_left">
+            <list class="left_nav" show-scrollbar="false">
+               <cell>
+                   <text :class="[item.name == current?'choose':'noChoose','nav_list']" v-for="item in categories" @click="onChoose(item)">{{item.name}}</text>
+               </cell>
+            </list>
+        </div>
+        <yc-list @refresh="handleRefresh" @loading="onloading" ref="list" @loadMore="onloading">
+            <cell class="classify_right" v-if="reappear">
+                <div  class="right_content" v-if="!noneData">
+                    <div class="content_list" v-for="item in period_products" @click="gotodetails(item.id)">
+                        <image style="width: 180px;height: 180px;margin-right: 18px" :src="item.image_small_url"></image>
+                        <div class="list_right">
+                            <text class="list_right_text product_name">{{item.product_name}}</text>
+                            <text class="list_right_text">期号 {{item.id}}</text>
+                            <!--进度条-->
+                            <div class="process-banner">
+                                <div class="total" style="width:300px;height: 20px">
+                                    <div class="inner" :style="{width:parseInt(300*item.progress_percent/100)+'px',height: '20px'}">
+                                        <div class="inner_gradient" :style="{width:parseInt(300*item.progress_percent/100)+'px',height: '20px'}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--进度条-->
+                            <div class="list_right_num">
+                                <div class="list_right_text list_max_num" style="flex-direction: row">
+                                    <text class="list_right_text">总需：</text>
+                                    <text class="list_right_text_num">{{item.max_num}}</text></div>
+                                <div class="list_right_text list_buy_num" style="flex-direction: row">
+                                    <text class="list_right_text">剩余：</text>
+                                    <text class="list_right_text_num" style="color:#fc0048;font-size:24px;padding-left:3px; ">{{item.max_num-item.buy_num}}</text>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---->
+                <nodata nodata_title="暂无数据" style="width: 570px;margin-bottom: 500px"  v-if="noneData"></nodata>
+            </cell>
+        </yc-list>
+    </div>
+
+</osc-navpage>
