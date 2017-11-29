@@ -34,9 +34,9 @@
         <p class="footer">如遇无法下载,请使用系统浏览器打开</p>
     </div>
     <script type="text/javascript">
-    // $('.main').on('touchstart', function(e) {
-    //     $('.item2').removeClass('active')
-    // })
+    $('.main').on('touchstart', function(e) {
+        $('.item2').removeClass('active')
+    })
     $('.item2').each(function(i, e) {
         $(this).on('touchstart', function(e) {
             $(this).addClass('active')
