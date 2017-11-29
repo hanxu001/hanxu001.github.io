@@ -303,9 +303,9 @@ h4 {
 }
 
 .wxtip-icon {
-    width: 52px;
-    height: 67px;
-    background: url(weixin-tip.png) no-repeat;
+    width: 116px;
+    height: 151px;
+    background: url('../imgs/weixin-tip.png') no-repeat;
     display: block;
     position: absolute;
     right: 20px;
@@ -313,7 +313,7 @@ h4 {
 }
 
 .wxtip-txt {
-    margin-top: 107px;
+    margin-top: 207px;
     color: #fff;
     font-size: 16px;
     line-height: 1.5;
