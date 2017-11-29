@@ -52,6 +52,7 @@
     $('.item2').each(function(i, e) {
         $(this).on('touchstart', function(e) {
             $(this).addClass('active')
+            $('#wxtip').show();
         })
         $(this).on('touchend', function(e) {
             $(this).removeClass('active')
