@@ -43,25 +43,20 @@
     </div>
     <script type="text/javascript">
     $('#wxtip').hide();
-    $('#wxtip').click(function(){
+
+    $('#wxtip').on('touchstart', function(e) {
         $('#wxtip').hide();
     })
     $('.main').on('touchstart', function(e) {
         $('.item2').removeClass('active')
     })
-    $('.item2').each(function(i, e) {
-        $(this).on('touchstart', function(e) {
-            $(this).addClass('active')
-            alert('touchstart')
-            $('#wxtip').show();
-        })
-        $(this).on('touchend', function(e) {
-            $(this).removeClass('active')
-        })
-        $(this).on('click', function(e) {
-            alert('click')
-            $('#wxtip').show();
-        })
+
+    $('.item2') on('touchstart', function(e) {
+        $('.item2') addClass('active')
+        $('#wxtip').show();
+    })
+    $('.item2') on('touchend', function(e) {
+        $('.item2').removeClass('active')
     })
     </script>
 </body>
