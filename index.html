@@ -52,12 +52,14 @@
     $('.item2').each(function(i, e) {
         $(this).on('touchstart', function(e) {
             $(this).addClass('active')
+            alert('touchstart')
             $('#wxtip').show();
         })
         $(this).on('touchend', function(e) {
             $(this).removeClass('active')
         })
         $(this).on('click', function(e) {
+            alert('click')
             $('#wxtip').show();
         })
     })
