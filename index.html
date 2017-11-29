@@ -12,6 +12,14 @@
 
 <body>
     <div class="main">
+        <div class="wxtip">
+            <p class="wxtip-txt">
+                点击右上角
+                <br/> 选择在浏览器中打开
+            </p>
+            <img src="imgs/weixin-tip.png" class="wxtip-icon">
+        </div>
+        <div style="height: 50px;" class="h50"></div>
         <img src="imgs/logo.png" alt="" class="logo">
         <h4>币汇算 APP</h4>
         <div class="content">
@@ -33,27 +41,12 @@
         </div>
         <p class="footer">如遇无法下载,请使用系统浏览器打开</p>
     </div>
-    <!-- add -->
-    <div class="wxtip" id="wxtip">
-        <span class="wxtip-icon"></span>
-        <p class="wxtip-txt">
-            点击右上角
-            <br/> 选择在浏览器中打开
-        </p>
-    </div>
     <script type="text/javascript">
-    $('#wxtip').hide();
-
-    $('#wxtip').on('touchstart', function(e) {
-        $('#wxtip').hide();
-    })
     $('.main').on('touchstart', function(e) {
         $('.item2').removeClass('active')
     })
-
     $('.item2').on('touchstart', function(e) {
         $('.item2').addClass('active')
-        $('#wxtip').show();
     })
     $('.item2').on('touchend', function(e) {
         $('.item2').removeClass('active')

@@ -179,12 +179,13 @@ select {
 
 .main {
     width: 100%;
-    /*height: 100%;*/
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-bottom: 100px;
+    padding-bottom: 50px;
+    background-color: #f1f1f1;
 }
 
 .logo {
@@ -192,7 +193,6 @@ select {
     max-width: 120px;
     height: auto;
     border-radius: 50%;
-    margin-top: 50px;
 }
 
 h4 {
@@ -278,29 +278,23 @@ h4 {
 }
 
 .wxtip {
-    background: rgba(0, 0, 0, 0.8);
     text-align: center;
-    position: fixed;
-    left: 0;
-    top: 0;
     width: 100%;
-    height: 100%;
-    z-index: 998;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .wxtip-icon {
-    width: 116px;
-    height: 151px;
-    background: url('../imgs/weixin-tip.png') no-repeat;
-    display: block;
-    position: absolute;
-    right: 20px;
-    top: 20px;
+    width: 58px;
+    height: 75px;
+    margin-top: 6px;
 }
 
 .wxtip-txt {
-    margin-top: 207px;
-    color: #fff;
+    color: #333;
     font-size: 16px;
     line-height: 1.5;
+    margin-right: 20px;
 }
