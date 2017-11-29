@@ -28,22 +28,38 @@
         <div class="item item1">
             Appstore 下载(敬请期待)
         </div>
-        <div class="item item2">
+        <div class="item item2" id="item2">
             Android 本地下载
         </div>
         <p class="footer">如遇无法下载,请使用系统浏览器打开</p>
     </div>
+    <!-- add -->
+    <div class="wxtip" id="wxtip">
+        <span class="wxtip-icon"></span>
+        <p class="wxtip-txt">
+            点击右上角
+            <br/> 选择在浏览器中打开
+        </p>
+    </div>
+    <!-- add -->
     <script type="text/javascript">
-    $('.main').on('touchstart', function(e) {
+    // 判断是微信打开
+    $('#wxtip').hide()
+    var ua = navigator.userAgent;
+    var isWeixin = !!/MicroMessenger/i.test(ua);
+    $('.main').on('click', function(e) {
         $('.item2').removeClass('active')
     })
     $('.item2').each(function(i, e) {
-        $(this).on('touchstart', function(e) {
+        $(this).on('click', function(e) {
+            if(isWeixin){
+                $('#wxtip').show()
+            }
             $(this).addClass('active')
         })
-        $(this).on('touchend', function(e) {
-            $(this).removeClass('active')
-        })
+    })
+    $('#wxtip').click(function(){
+        $('#wxtip').hide()
     })
     </script>
 </body>
