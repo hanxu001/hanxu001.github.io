@@ -260,6 +260,7 @@ h4 {
     background-color: #1787fb;
     font-size: 18px;
     color: #fff;
+    cursor:pointer;
 }
 
 .active {

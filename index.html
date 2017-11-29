@@ -38,12 +38,12 @@
     //     $('.item2').removeClass('active')
     // })
     $('.item2').each(function(i, e) {
-        // $(this).on('touchstart', function(e) {
-        //     $(this).addClass('active')
-        // })
-        // $(this).on('touchend', function(e) {
-        //     $(this).removeClass('active')
-        // })
+        $(this).on('touchstart', function(e) {
+            $(this).addClass('active')
+        })
+        $(this).on('touchend', function(e) {
+            $(this).removeClass('active')
+        })
         $(this).on('click', function(e) {
             $(this).addClass('active')
         })
