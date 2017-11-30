@@ -12,13 +12,6 @@
 
 <body>
     <div class="main">
-        <div class="wxtip">
-            <p class="wxtip-txt">
-                点击右上角
-                <br/> 选择在浏览器中打开
-            </p>
-            <img src="imgs/weixin-tip.png" class="wxtip-icon">
-        </div>
         <div style="height: 50px;" class="h50"></div>
         <img src="imgs/logo.png" alt="" class="logo">
         <h4>币汇算 APP</h4>
@@ -40,6 +33,13 @@
             Android 本地下载
         </div>
         <p class="footer">如遇无法下载,请使用系统浏览器打开</p>
+        <div class="wxtip">
+            <img src="imgs/weixin-tip.png" class="wxtip-icon">
+            <p class="wxtip-txt">
+                点击右上角
+                <br/> 选择在浏览器中打开
+            </p>
+        </div>
     </div>
     <script type="text/javascript">
     $('.main').on('touchstart', function(e) {
@@ -51,23 +51,21 @@
     $('.item2').on('touchend', function(e) {
         $('.item2').removeClass('active')
     })
-    $(function() {
-        var domain = document.domain;
-        //console.log('domain=' + domain);
-        if ('domain' == 'qbview.url.cn') {
-            var redirect_url = GetQueryString('url');
-            //console.log('redirect_url=' + redirect_url);
-            top.location.href = '' + redirect_url;
+    $('.item2').click(function() {
+        if (is_weixn()) {
+            $('.wxtip').show()
         }
-    });
-
-    function GetQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return unescape(r[2]);
+    })
+    $('.wxtip').click(function() {
+        $('.wxtip').hide()
+    })
+    function is_weixn() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
         }
-        return '';
     }
     </script>
 </body>
