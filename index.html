@@ -1,1 +1,87 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><title>vue-account</title><link href=/trander_static/css/app.50fc62ce6a0745e3d74337e303af95c6.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/trander_static/js/manifest.77aad7139c04b583c28f.js></script><script type=text/javascript src=/trander_static/js/vendor.dfca8a1897ed03f30a38.js></script><script type=text/javascript src=/trander_static/js/app.1b0e66ce88789ad5c294.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>币汇算</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+    (function(t) {
+        var doc = t.documentElement;
+        var curDeviceWidth = doc.clientWidth || window.innerWidth;
+        doc.style.fontSize = curDeviceWidth * (50 / 375) + 'px';
+    })(document);
+    </script>
+</head>
+
+<body>
+    <div class="main">
+        <img src="imgs/logo.png" class="logo">
+        <h2 class="title">币汇算APP</h2>
+        <div class="content">
+            <div>
+                <img src="imgs/1.png" alt="">
+                <p>实时行情监控</p>
+            </div>
+            <div>
+                <img src="imgs/2.png" alt="">
+                <p>实时行情监控</p>
+            </div>
+            <div>
+                <img src="imgs/3.png" alt="">
+                <p>实时行情监控</p>
+            </div>
+        </div>
+        <div class="btn ios">
+            <img src="imgs/ios.png" alt="">
+            <p>Appstore 下载</p>
+        </div>
+        <div class="btn Android">
+            <img src="imgs/Android.png" alt="">
+            <p>Android本地下载</p>
+        </div>
+        <p class="last">如果遇到无法下载，请使用系统浏览器打开</p>
+        <div class="wxtip">
+            <img src="imgs/weixin-tip.png" class="wxtip-icon">
+            <p class="wxtip-txt">
+                点击右上角
+                <br/> 选择在浏览器中打开
+            </p>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $('.main').on('touchstart', function(e) {
+        $('.item').removeClass('active')
+    })
+    $('.btn').each(function(i, e) {
+        $(this).on('touchstart', function(e) {
+            $(this).addClass('active')
+        })
+        $(this).on('touchend', function(e) {
+            $(this).removeClass('active')
+        })
+    })
+    $('.wxtip').click(function() {
+        $('.wxtip').hide()
+    })
+    function is_weixn() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    $('.btn').click(function() {
+        if (is_weixn()) {
+            $('.wxtip').show()
+        }
+        // 下载逻辑写这里
+    })
+    </script>
+</body>
+
+</html>
